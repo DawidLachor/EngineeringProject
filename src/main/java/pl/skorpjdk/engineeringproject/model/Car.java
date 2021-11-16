@@ -1,8 +1,6 @@
 package pl.skorpjdk.engineeringproject.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
@@ -47,4 +45,6 @@ public class Car {
     private List<Equipment> equipments;
     @OneToMany(targetEntity = Transmission.class)
     private List<Transmission> transmissions;
+    @OneToOne(targetEntity = Announcement.class)
+    private Announcement announcement;
 }
