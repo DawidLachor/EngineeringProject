@@ -18,7 +18,4 @@ public class CarImage {
     private Long id;
     private String name;
     private byte[] image;
-
-    @ManyToOne(targetEntity = Car.class,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-    private Car car;
 }

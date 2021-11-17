@@ -17,7 +17,4 @@ public class BodyType {
     @Column(name = "id_body_type")
     private long id;
     private String name;
-    @ManyToOne(cascade = CascadeType.ALL,targetEntity = Car.class)
-    private Car car;
-
 }

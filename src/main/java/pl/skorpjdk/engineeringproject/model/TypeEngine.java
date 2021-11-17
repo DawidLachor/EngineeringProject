@@ -16,9 +16,4 @@ public class TypeEngine {
     @Column(name = "id_type_engine")
     private Long id;
     private String name;
-
-    @ManyToOne(targetEntity = Generation.class)
-    private Generation generation;
-    @OneToMany(targetEntity = Engine.class)
-    private List<Engine> engines;
 }

@@ -18,7 +18,4 @@ public class Transmission {
     private String type;
     @Column(name = "number_of_gears")
     private int numberOfGears;
-
-    @ManyToOne(targetEntity = Car.class)
-    private Car car;
 }

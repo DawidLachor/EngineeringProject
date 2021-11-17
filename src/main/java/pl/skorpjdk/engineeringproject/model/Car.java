@@ -33,9 +33,14 @@ public class Car {
     @Column(name = "registered_in_poland")
     private boolean registeredInPoland;
 
-    @OneToMany(targetEntity = BodyType.class)
-    private List<BodyType> bodyTypes;
-    @OneToMany(cascade = CascadeType.ALL, targetEntity = CarImage.class)
+    @OneToOne
+    @JoinColumn(name = "id_body_type")
+    private BodyType bodyTypes;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "CAR_IMAGE_CAR",
+            joinColumns = {@JoinColumn(name = "id_car", referencedColumnName = "id_car")},
+            inverseJoinColumns = {@JoinColumn(name = "id_car_image", referencedColumnName = "id_car_image")}
+    )
     private List<CarImage> carImages;
     @ManyToMany(targetEntity = Equipment.class)
     @JoinTable(name = "EQUIPMENT_CAR",
@@ -43,8 +48,13 @@ public class Car {
             inverseJoinColumns = {@JoinColumn(name = "id_equipment", referencedColumnName = "id_equipment")}
     )
     private List<Equipment> equipments;
-    @OneToMany(targetEntity = Transmission.class)
-    private List<Transmission> transmissions;
-    @OneToOne(targetEntity = Announcement.class)
-    private Announcement announcement;
+    @OneToOne
+    @JoinColumn(name = "id_transmission")
+    private Transmission transmission;
+    @OneToOne
+    @JoinColumn(name = "id_type_engine")
+    private TypeEngine typeEngine;
+    @OneToOne
+    @JoinColumn(name = "id_mark")
+    private Mark mark;
 }

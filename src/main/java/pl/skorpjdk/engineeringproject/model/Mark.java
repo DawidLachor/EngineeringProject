@@ -16,8 +16,5 @@ public class Mark {
     @Column(name = "id_mark")
     private Long id;
     private String name;
-    @ManyToOne(targetEntity = Car.class)
-    private Car car;
-    @OneToMany(targetEntity = Model.class)
-    private List<Model> models;
+
 }

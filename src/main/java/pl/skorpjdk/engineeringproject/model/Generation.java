@@ -25,6 +25,5 @@ public class Generation {
 
     @ManyToOne(targetEntity = Model.class)
     private Model model;
-    @OneToMany(targetEntity = TypeEngine.class)
-    private List<TypeEngine> typeEngines;
+
 }

@@ -16,6 +16,8 @@ public class Announcement {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_announcement")
     private Long id;
+    private boolean active;
+    private boolean delete;
     private String title;
     private String description;
     private BigDecimal price;
@@ -24,8 +26,9 @@ public class Announcement {
     private LocalDateTime created;
     private LocalDateTime modification;
 
-    @OneToOne(targetEntity = Car.class)
+    @OneToOne
     private Car car;
-    @ManyToOne(targetEntity = Account.class)
+    @ManyToOne
+    @JoinColumn(name = "id_account", nullable = false)
     private Account account;
 }

@@ -19,7 +19,4 @@ public class Account {
     private String surname;
     private String location;
     private Integer phone;
-
-    @OneToMany(targetEntity = Announcement.class)
-    List<Announcement> announcements;
 }

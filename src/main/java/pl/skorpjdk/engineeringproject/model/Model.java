@@ -19,6 +19,5 @@ public class Model {
 
     @ManyToOne(targetEntity = Mark.class)
     private Mark mark;
-    @OneToMany(targetEntity = Generation.class)
-    private List<Generation> generations;
+
 }
