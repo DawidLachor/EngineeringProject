@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class Capacity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_capaciy")
+    @Column(name = "id_capacity")
     private Long id;
     private Integer city;
     @Column(name = "out_of_tower")

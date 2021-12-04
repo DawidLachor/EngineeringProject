@@ -28,7 +28,7 @@ public class Car {
     @Column(name = "number_of_door")
     private int numberOfDoor;
     private String state;
-    @Column(name = "never_creashed")
+    @Column(name = "never_crashed")
     private boolean neverCrashed;
     @Column(name = "registered_in_poland")
     private boolean registeredInPoland;
