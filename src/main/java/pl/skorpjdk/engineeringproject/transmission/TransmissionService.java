@@ -2,7 +2,6 @@ package pl.skorpjdk.engineeringproject.transmission;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.skorpjdk.engineeringproject.repository.TransmissionRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;

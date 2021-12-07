@@ -2,6 +2,7 @@ package pl.skorpjdk.engineeringproject.model;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import pl.skorpjdk.engineeringproject.bodyType.BodyType;
 import pl.skorpjdk.engineeringproject.transmission.Transmission;
 import pl.skorpjdk.engineeringproject.typeEngine.TypeEngine;
 
