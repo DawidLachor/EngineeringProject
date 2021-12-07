@@ -9,10 +9,10 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "CAPACITY")
-public class Capacity {
+public class Combustion {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_capacity")
+    @Column(name = "id_combustion")
     private Long id;
     private Integer city;
     @Column(name = "out_of_tower")

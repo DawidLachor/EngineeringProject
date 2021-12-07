@@ -1,7 +1,6 @@
-package pl.skorpjdk.engineeringproject.repository;
+package pl.skorpjdk.engineeringproject.typeEngine;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import pl.skorpjdk.engineeringproject.model.TypeEngine;
 
 public interface TypeEngineRepository extends JpaRepository<TypeEngine, Long> {
 }

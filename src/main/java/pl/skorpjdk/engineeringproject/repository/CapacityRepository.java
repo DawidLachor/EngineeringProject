@@ -1,7 +1,7 @@
 package pl.skorpjdk.engineeringproject.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import pl.skorpjdk.engineeringproject.model.Capacity;
+import pl.skorpjdk.engineeringproject.model.Combustion;
 
-public interface CapacityRepository extends JpaRepository<Capacity, Long> {
+public interface CapacityRepository extends JpaRepository<Combustion, Long> {
 }

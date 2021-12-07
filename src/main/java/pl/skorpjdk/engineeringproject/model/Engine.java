@@ -2,6 +2,7 @@ package pl.skorpjdk.engineeringproject.model;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import pl.skorpjdk.engineeringproject.typeEngine.TypeEngine;
 
 import javax.persistence.*;
 
@@ -15,10 +16,10 @@ public class Engine {
     @Column(name = "id_engine")
     private Long id;
     private Integer power;
-    private Integer combustion;
+    private Integer capacity;
 
     @ManyToOne(targetEntity = TypeEngine.class)
     private TypeEngine typeEngine;
-    @OneToOne(targetEntity = Capacity.class)
-    private Capacity capacity;
+    @OneToOne(targetEntity = Combustion.class)
+    private Combustion combustion;
 }

@@ -2,6 +2,8 @@ package pl.skorpjdk.engineeringproject.model;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import pl.skorpjdk.engineeringproject.transmission.Transmission;
+import pl.skorpjdk.engineeringproject.typeEngine.TypeEngine;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -21,6 +23,7 @@ public class Car {
     @Column(length = 17)
     private String vin;
     private String color;
+    private Integer mileage;
     @Column(length = 10)
     private String registration;
     @Column(name = "number_of_seats")
