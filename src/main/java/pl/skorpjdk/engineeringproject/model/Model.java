@@ -2,6 +2,7 @@ package pl.skorpjdk.engineeringproject.model;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import pl.skorpjdk.engineeringproject.mark.Mark;
 
 import javax.persistence.*;
 

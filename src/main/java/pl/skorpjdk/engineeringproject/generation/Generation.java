@@ -1,7 +1,8 @@
-package pl.skorpjdk.engineeringproject.model;
+package pl.skorpjdk.engineeringproject.generation;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import pl.skorpjdk.engineeringproject.model.Model;
 
 import javax.persistence.*;
 import java.time.LocalDate;

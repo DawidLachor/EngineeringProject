@@ -1,4 +1,4 @@
-package pl.skorpjdk.engineeringproject.model;
+package pl.skorpjdk.engineeringproject.mark;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
