@@ -1,15 +1,20 @@
-package pl.skorpjdk.engineeringproject.model;
+package pl.skorpjdk.engineeringproject.announcement;
 
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
+import pl.skorpjdk.engineeringproject.car.Car;
+import pl.skorpjdk.engineeringproject.account.Account;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @RequiredArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
 @Table(name = "ANNOUNCEMENT")
 public class Announcement {
     @Id
@@ -31,4 +36,17 @@ public class Announcement {
     @ManyToOne
     @JoinColumn(name = "id_account", nullable = false)
     private Account account;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Announcement that = (Announcement) o;
+        return id != null && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

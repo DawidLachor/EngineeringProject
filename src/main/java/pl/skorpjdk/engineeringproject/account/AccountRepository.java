@@ -1,7 +1,6 @@
-package pl.skorpjdk.engineeringproject.repository;
+package pl.skorpjdk.engineeringproject.account;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import pl.skorpjdk.engineeringproject.model.Account;
 
 public interface AccountRepository extends JpaRepository<Account, Long> {
 }

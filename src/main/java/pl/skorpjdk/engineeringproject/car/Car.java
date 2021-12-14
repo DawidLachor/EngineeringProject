@@ -1,19 +1,23 @@
-package pl.skorpjdk.engineeringproject.model;
+package pl.skorpjdk.engineeringproject.car;
 
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 import pl.skorpjdk.engineeringproject.bodyType.BodyType;
 import pl.skorpjdk.engineeringproject.equipment.Equipment;
 import pl.skorpjdk.engineeringproject.mark.Mark;
+import pl.skorpjdk.engineeringproject.model.CarImage;
 import pl.skorpjdk.engineeringproject.transmission.Transmission;
 import pl.skorpjdk.engineeringproject.typeEngine.TypeEngine;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @RequiredArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(name = "CAR")
 public class Car {
@@ -47,12 +51,14 @@ public class Car {
             joinColumns = {@JoinColumn(name = "id_car", referencedColumnName = "id_car")},
             inverseJoinColumns = {@JoinColumn(name = "id_car_image", referencedColumnName = "id_car_image")}
     )
+    @ToString.Exclude
     private List<CarImage> carImages;
     @ManyToMany(targetEntity = Equipment.class)
     @JoinTable(name = "EQUIPMENT_CAR",
             joinColumns = {@JoinColumn(name = "id_car", referencedColumnName = "id_car")},
             inverseJoinColumns = {@JoinColumn(name = "id_equipment", referencedColumnName = "id_equipment")}
     )
+    @ToString.Exclude
     private List<Equipment> equipments;
     @OneToOne
     @JoinColumn(name = "id_transmission")
@@ -63,4 +69,25 @@ public class Car {
     @OneToOne
     @JoinColumn(name = "id_mark")
     private Mark mark;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Car car = (Car) o;
+        return id != null && Objects.equals(id, car.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
+    public boolean getNeverCrashed() {
+        return neverCrashed;
+    }
+
+    public boolean getRegisteredInPoland() {
+        return registeredInPoland;
+    }
 }
