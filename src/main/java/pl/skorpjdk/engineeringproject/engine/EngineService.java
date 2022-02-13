@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class EngineService {
 
-    private final EngineRepository engineRepository;
+    private EngineRepository engineRepository;
 
     public List<EngineDto> getEngines(){
         return engineRepository.findAll().stream()

@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class TransmissionService {
 
-    private final TransmissionRepository transmission;
+    private TransmissionRepository transmission;
 
     public List<TransmissionDto> getTransmissions() {
         return transmission.findAll().stream()

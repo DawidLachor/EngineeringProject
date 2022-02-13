@@ -1,5 +1,6 @@
 package pl.skorpjdk.engineeringproject.announcement;
 
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AnnouncementService {
 
-    private final AnnouncementRepository announcementRepository;
+    private AnnouncementRepository announcementRepository;
 
     public List<AnnouncementDto> getAnnouncements() {
         return announcementRepository.findAll().stream()

@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MarkService {
 
-    private final MarkRepository markRepository;
+    private MarkRepository markRepository;
 
     public List<MarkDto> getMarks() {
         return markRepository.findAll().stream()

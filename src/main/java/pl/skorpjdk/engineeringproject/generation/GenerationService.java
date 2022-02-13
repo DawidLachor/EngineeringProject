@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class GenerationService {
 
-    private final GenerationRepository generationRepository;
+    private GenerationRepository generationRepository;
 
 
     public List<GenerationDto> getGeneration() {

@@ -9,7 +9,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CombustionService {
 
-    private final CombustionRepository combustionRepository;
+    private CombustionRepository combustionRepository;
 
 
     public CombustionDto getCombust(Long id) {

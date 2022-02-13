@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class EquipmentService {
 
-    private final EquipmentRepository equipmentRepository;
+    private  EquipmentRepository equipmentRepository;
 
     public List<EquipmentDto> getEquipment(){
         return equipmentRepository.findAll().stream()

@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ModelService {
 
-    private final ModelRepository modelRepository;
+    private ModelRepository modelRepository;
 
     public List<ModelDto> getModels() {
         return modelRepository.findAll().stream()

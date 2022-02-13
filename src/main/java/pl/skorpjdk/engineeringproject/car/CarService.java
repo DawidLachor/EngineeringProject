@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CarService {
 
-    private final CarRepository carRepository;
+    private CarRepository carRepository;
 
 
     public List<CarDto> getCars() {
