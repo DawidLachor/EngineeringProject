@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class BodyTypeService {
 
-    private BodyTypeRepository bodyTypeRepository;
+    private final BodyTypeRepository bodyTypeRepository;
 
     public List<BodyTypeDto> getBodyTypes() {
         return bodyTypeRepository.findAll().stream().

@@ -10,10 +10,16 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ModelService {
 
-    private ModelRepository modelRepository;
+    private final ModelRepository modelRepository;
 
     public List<ModelDto> getModels() {
         return modelRepository.findAll().stream()
+                .map(new MapperModel()::toDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<ModelDto> getModelsByMarkId(Long id) {
+        return modelRepository.findAllByMark_Id(id).stream()
                 .map(new MapperModel()::toDto)
                 .collect(Collectors.toList());
     }

@@ -5,6 +5,7 @@ import pl.skorpjdk.engineeringproject.mapper.Mapper;
 public class MapperBodyType implements Mapper<BodyType, BodyTypeDto> {
     @Override
     public BodyTypeDto toDto(BodyType entity) {
+        System.out.println(entity.getId()+" " + entity.getName());
         return new BodyTypeDto(entity.getId(), entity.getName());
     }
 
