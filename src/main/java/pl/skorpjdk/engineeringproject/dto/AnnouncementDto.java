@@ -1,10 +1,6 @@
 package pl.skorpjdk.engineeringproject.dto;
 
-import pl.skorpjdk.engineeringproject.model.CarImage;
-
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class AnnouncementDto {
 

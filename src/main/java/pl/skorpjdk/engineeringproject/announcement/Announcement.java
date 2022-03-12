@@ -4,10 +4,12 @@ import lombok.*;
 import org.hibernate.Hibernate;
 import pl.skorpjdk.engineeringproject.car.Car;
 import pl.skorpjdk.engineeringproject.account.Account;
+import pl.skorpjdk.engineeringproject.image.CarImage;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Entity

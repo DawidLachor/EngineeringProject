@@ -5,7 +5,7 @@ import org.hibernate.Hibernate;
 import pl.skorpjdk.engineeringproject.bodyType.BodyType;
 import pl.skorpjdk.engineeringproject.equipment.Equipment;
 import pl.skorpjdk.engineeringproject.mark.Mark;
-import pl.skorpjdk.engineeringproject.model.CarImage;
+import pl.skorpjdk.engineeringproject.image.CarImage;
 import pl.skorpjdk.engineeringproject.transmission.Transmission;
 import pl.skorpjdk.engineeringproject.typeEngine.TypeEngine;
 
@@ -46,13 +46,6 @@ public class Car {
     @OneToOne
     @JoinColumn(name = "id_body_type")
     private BodyType bodyTypes;
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "CAR_IMAGE_CAR",
-            joinColumns = {@JoinColumn(name = "id_car", referencedColumnName = "id_car")},
-            inverseJoinColumns = {@JoinColumn(name = "id_car_image", referencedColumnName = "id_car_image")}
-    )
-    @ToString.Exclude
-    private List<CarImage> carImages;
     @ManyToMany(targetEntity = Equipment.class)
     @JoinTable(name = "EQUIPMENT_CAR",
             joinColumns = {@JoinColumn(name = "id_car", referencedColumnName = "id_car")},
