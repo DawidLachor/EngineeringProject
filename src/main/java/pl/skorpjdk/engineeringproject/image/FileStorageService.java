@@ -5,13 +5,12 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Stream;
 
 
 @Service
@@ -24,13 +23,19 @@ public class FileStorageService {
             if(!Files.exists(path)){
                 Files.createDirectory(path);
             }
-
-            Files.copy(file.getInputStream(), path.resolve(UUID.randomUUID().toString()));
-
-            return path.resolve(file.getOriginalFilename()).toString();
+            Path newName = path.resolve(UUID.randomUUID().toString());
+            Files.copy(file.getInputStream(), newName);
+            Optional<String> type = getType(newName);
+            return newName.toUri() + "." + type;
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }
+    }
+
+    private Optional<String> getType(Path newName) {
+        return Optional.of(newName.toString())
+                .filter(f -> f.contains("."))
+                .map(f -> f.substring(newName.toString().lastIndexOf(".") + 1));
     }
 
     public Resource load(String filename) {

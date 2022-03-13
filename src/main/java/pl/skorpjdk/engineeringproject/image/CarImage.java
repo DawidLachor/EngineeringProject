@@ -19,6 +19,7 @@ public class CarImage {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_car_image")
     private Long id;
+    private String name;
     private String url;
 
     @ManyToOne

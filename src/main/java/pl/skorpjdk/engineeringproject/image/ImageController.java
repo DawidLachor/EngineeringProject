@@ -26,14 +26,14 @@ public class ImageController {
     private final AnnouncementRepository announcementRepository;
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("announcementId") Long id) {
+    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam(value = "announcementId", required = false) Long id) {
         String message = "";
-        Optional<Announcement> announcement = announcementRepository.findById(id);
+//        Optional<Announcement> announcement = announcementRepository.findById(id);
         CarImage carImage = new CarImage();
         try {
             String pathFile = storageService.save(file);
 
-            announcement.ifPresentOrElse(carImage::setAnnouncement, () ->{throw new NullPointerException();});
+//            announcement.ifPresentOrElse(carImage::setAnnouncement, () ->{throw new NullPointerException();});
             carImage.setUrl(pathFile);
             carImageRepository.save(carImage);
 
