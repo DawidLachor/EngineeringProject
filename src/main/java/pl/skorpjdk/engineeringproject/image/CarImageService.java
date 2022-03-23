@@ -1,42 +1,44 @@
 package pl.skorpjdk.engineeringproject.image;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import pl.skorpjdk.engineeringproject.announcement.Announcement;
+import pl.skorpjdk.engineeringproject.announcement.AnnouncementService;
 
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 
 @Service
-public class FileStorageService {
+@RequiredArgsConstructor
+public class CarImageService {
 
     private final Path path = Paths.get("uploads");
+    private final AnnouncementService announcementService;
+    private final CarImageRepository carImageRepository;
 
     public String save(MultipartFile file) {
         try {
             if(!Files.exists(path)){
                 Files.createDirectory(path);
             }
-            Path newName = path.resolve(UUID.randomUUID().toString());
+            String newNameImage = UUID.randomUUID().toString();
+            Path newName = path.resolve(newNameImage);
             Files.copy(file.getInputStream(), newName);
-            Optional<String> type = getType(newName);
-            return newName.toUri() + "." + type;
+            return newNameImage;
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }
     }
 
-    private Optional<String> getType(Path newName) {
-        return Optional.of(newName.toString())
-                .filter(f -> f.contains("."))
-                .map(f -> f.substring(newName.toString().lastIndexOf(".") + 1));
-    }
 
     public Resource load(String filename) {
         try {
@@ -49,6 +51,16 @@ public class FileStorageService {
             }
         } catch (MalformedURLException e) {
             throw new RuntimeException("Error: " + e.getMessage());
+        }
+    }
+
+    public List<CarImage> findAll(Long id) {
+        Announcement announcementEntity = announcementService.getAnnouncementEntity(id);
+        Optional<List<CarImage>> byAnnouncement = carImageRepository.findByAnnouncement(announcementEntity);
+        if (byAnnouncement.isPresent()) {
+            return byAnnouncement.get();
+        } else {
+            throw new IllegalArgumentException("The Car Image with such id doesn't exist");
         }
     }
 }

@@ -51,9 +51,9 @@ public class RegistrationService {
             throw new IllegalStateException("Token expired");
         }
         confirmationTokenService.setConfirmedAt(token);
-//        accountService.enableAppUser(
-//                confirmationToken.getAccount().getEmail()
-//        );
+        accountService.enableAppUser(
+                confirmationToken.getAccount().getEmail()
+        );
         return "confirm";
     }
 
@@ -66,7 +66,9 @@ public class RegistrationService {
                         request.getEmail(),
                         request.getPassword(),
                         UserRole.USER,
-                        LocalDateTime.now()
+                        LocalDateTime.now(),
+                        request.getPhone(),
+                        request.getLocation()
                 )
         );
     }

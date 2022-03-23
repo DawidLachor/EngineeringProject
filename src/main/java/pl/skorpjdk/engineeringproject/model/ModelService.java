@@ -23,4 +23,8 @@ public class ModelService {
                 .map(new MapperModel()::toDto)
                 .collect(Collectors.toList());
     }
+
+    public Model getModel(Long id) {
+        return modelRepository.findById(id).get();
+    }
 }

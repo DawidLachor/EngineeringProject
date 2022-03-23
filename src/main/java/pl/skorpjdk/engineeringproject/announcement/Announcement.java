@@ -27,11 +27,11 @@ public class Announcement {
     private boolean delete;
     private String title;
     private String description;
-    private BigDecimal price;
+    private String price;
     private String location;
-    private String type;
     private LocalDateTime created;
     private LocalDateTime modification;
+    private String phone;
 
     @OneToOne
     private Car car;

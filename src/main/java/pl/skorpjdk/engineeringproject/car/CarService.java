@@ -10,12 +10,19 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CarService {
 
-    private CarRepository carRepository;
-
+    private final CarRepository carRepository;
 
     public List<CarDto> getCars() {
         return carRepository.findAll().stream()
                 .map(new MapperCar()::toDto)
                 .collect(Collectors.toList());
     }
+
+    public Car saveCar(Car car){
+        return carRepository.save(car);
+    }
+
+//    public Car findByAnnouncement(Long id){
+//       return carRepository.findByAnnouncement(id).get();
+//    }
 }

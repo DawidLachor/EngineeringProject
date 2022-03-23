@@ -5,24 +5,26 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.skorpjdk.engineeringproject.announcement.AnnouncementService;
 
 @RestController
 @RequestMapping("/api/")
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class AccountController {
 
-    private AccountService accountService;
+    private final AccountService accountService;
 
-    @GetMapping("account/{id}")
-    public ResponseEntity<?> getAccount(@PathVariable Long id){
-        AccountDto account = accountService.getAccount(id);
+    @GetMapping("account")
+    public ResponseEntity<?> getAccount(){
+        AccountDto account = accountService.getAccount();
         return new ResponseEntity<>(account, HttpStatus.OK);
+    }
+
+    @PostMapping("account")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePassword changePassword){
+        Boolean passwordChange = accountService.changePassword(changePassword);
+        return new ResponseEntity<>(passwordChange, HttpStatus.OK);
     }
 
 }

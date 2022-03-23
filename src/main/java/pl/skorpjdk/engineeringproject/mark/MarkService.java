@@ -17,4 +17,8 @@ public class MarkService {
                 .map(new MapperMark()::toDto)
                 .collect(Collectors.toList());
     }
+
+    public Mark getMark(Long id) {
+        return markRepository.findById(id).get();
+    }
 }

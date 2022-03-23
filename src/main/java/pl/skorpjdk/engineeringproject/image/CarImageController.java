@@ -15,26 +15,27 @@ import pl.skorpjdk.engineeringproject.announcement.AnnouncementRepository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
-public class ImageController {
+public class CarImageController {
 
-    private final FileStorageService storageService;
+    private final CarImageService storageService;
     private final CarImageRepository carImageRepository;
     private final AnnouncementRepository announcementRepository;
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam(value = "announcementId", required = false) Long id) {
         String message = "";
-//        Optional<Announcement> announcement = announcementRepository.findById(id);
+        Optional<Announcement> announcement = announcementRepository.findById(id);
         CarImage carImage = new CarImage();
         try {
-            String pathFile = storageService.save(file);
+            String imageName = storageService.save(file);
+            String url = MvcUriComponentsBuilder.fromMethodName(CarImageController.class, "getFile", imageName).build().toString();
 
-//            announcement.ifPresentOrElse(carImage::setAnnouncement, () ->{throw new NullPointerException();});
-            carImage.setUrl(pathFile);
+            announcement.ifPresentOrElse(carImage::setAnnouncement, () ->{throw new NullPointerException();});
+            carImage.setUrl(url);
+            carImage.setName(imageName);
             carImageRepository.save(carImage);
 
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
@@ -45,9 +46,9 @@ public class ImageController {
         }
     }
 
-    @GetMapping("/files")
-    public ResponseEntity<List<CarImage>> getListFiles() {
-        List<CarImage> all = carImageRepository.findAll();
+    @GetMapping("/{id}/files")
+    public ResponseEntity<List<CarImage>> getListFiles(@PathVariable Long id) {
+        List<CarImage> all = storageService.findAll(id);
         return ResponseEntity.status(HttpStatus.OK).body(all);
     }
     @GetMapping("/files/{filename:.+}")

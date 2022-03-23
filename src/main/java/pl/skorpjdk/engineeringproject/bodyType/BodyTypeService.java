@@ -17,4 +17,8 @@ public class BodyTypeService {
                 map(new MapperBodyType()::toDto)
                 .collect(Collectors.toList());
     }
+
+    public BodyType getBodyType(Long id){
+        return bodyTypeRepository.findById(id).get();
+    }
 }

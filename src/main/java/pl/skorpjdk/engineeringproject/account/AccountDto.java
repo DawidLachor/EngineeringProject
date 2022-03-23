@@ -15,7 +15,6 @@ public class AccountDto {
     private String firstName;
     private String lastName;
     private String email;
-    private BigInteger phone;
-    private String password;
+    private String phone;
     private String location;
 }

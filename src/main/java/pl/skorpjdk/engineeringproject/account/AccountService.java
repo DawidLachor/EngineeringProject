@@ -32,20 +32,14 @@ public class AccountService {
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
 
-    public AccountDto getAccount(Long id) {
-        Optional<Account> byId = accountRepository.findById(id);
-
-        if (byId.isPresent()) {
-            return new MapperAccount().toDto(byId.get());
-        } else {
-            throw new IllegalArgumentException("The");
-        }
+    public AccountDto getAccount() {
+        return new MapperAccount().toDto(getCurrentAccount());
     }
 
     public String singUpUser(Account account) {
         Optional<Account> userOptional = accountRepository.findByEmail(account.getEmail());
         if (userOptional.isPresent()) {
-            if(userOptional.get().getEnabled())
+            if (userOptional.get().getEnabled())
                 throw new IllegalStateException(String.format("Email %s exist in database", account.getEmail()));
         }
 
@@ -69,12 +63,12 @@ public class AccountService {
     }
 
     //zwracanie obecnie zalogowanego użytkownika
-    public Account getCurrentAccount(){
+    public Account getCurrentAccount() {
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         return accountRepository.findByUsername(loggedInUser.getName()).orElseThrow(() -> new UsernameNotFoundException("User don't found by username"));
     }
 
-    public Account findByUsername(String username){
+    public Account findByUsername(String username) {
         return accountRepository.findByUsername(username).orElseThrow(() -> new IllegalStateException("Username exist in database"));
     }
 
@@ -96,8 +90,16 @@ public class AccountService {
         return token;
     }
 
+    public Boolean changePassword(ChangePassword changePassword) {
+        Account currentAccount = getCurrentAccount();
+        String encode = bCryptPasswordEncoder.encode(changePassword.getNewPassword());
+        currentAccount.setPassword(encode);
+        accountRepository.save(currentAccount);
+        return true;
+    }
 
-//    public void enableAppUser(String email) {
-//        accountRepository.enableUser(email);
-//    }
+
+    public void enableAppUser(String email) {
+        accountRepository.enableUser(email);
+    }
 }

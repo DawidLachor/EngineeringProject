@@ -19,7 +19,7 @@ public class GenerationController {
 
     @GetMapping("generation")
     public ResponseEntity<?> getGeneration(){
-        List<GenerationDto> generation = generationService.getGeneration();
+        List<GenerationDto> generation = generationService.getGenerations();
         return new ResponseEntity<>(generation, HttpStatus.OK);
     }
 

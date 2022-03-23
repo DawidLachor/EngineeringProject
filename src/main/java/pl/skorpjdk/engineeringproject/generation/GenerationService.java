@@ -2,6 +2,7 @@ package pl.skorpjdk.engineeringproject.generation;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.skorpjdk.engineeringproject.transmission.Transmission;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +15,7 @@ public class GenerationService {
     private final GenerationRepository generationRepository;
 
 
-    public List<GenerationDto> getGeneration() {
+    public List<GenerationDto> getGenerations() {
         return generationRepository.findAll().stream()
                 .map(new MapperGeneration()::toDto)
                 .collect(Collectors.toList());
@@ -30,5 +31,15 @@ public class GenerationService {
             throw new IllegalStateException();
         }
 
+    }
+
+    public Generation getGeneration(Long id) {
+
+        Optional<Generation> byId = generationRepository.findById(id);
+        if (byId.isPresent()){
+            return byId.get();
+        }else {
+            throw new IllegalArgumentException("The engine with such id doesn't exist");
+        }
     }
 }

@@ -35,7 +35,7 @@ public class Account implements UserDetails {
     private String firstName;
     private String lastName;
     private String email;
-    private BigInteger phone;
+    private String phone;
     private String password;
     private String location;
     @Enumerated(EnumType.STRING)
@@ -44,7 +44,8 @@ public class Account implements UserDetails {
     private Boolean enabled = false;
     private LocalDateTime created;
 
-    public Account(String username, String firstName, String lastName, String email, String password, UserRole userRole, LocalDateTime created) {
+    public Account(String username, String firstName, String lastName, String email, String password, UserRole userRole,
+                   LocalDateTime created, String phone, String location) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -52,6 +53,8 @@ public class Account implements UserDetails {
         this.password = password;
         this.userRole = userRole;
         this.created = created;
+        this.phone = phone;
+        this.location = location;
     }
 
     @Override

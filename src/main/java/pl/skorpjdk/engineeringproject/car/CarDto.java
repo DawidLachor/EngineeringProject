@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.persistence.Column;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -13,22 +14,20 @@ import java.time.LocalDateTime;
 public class CarDto {
 
     private Long id;
-    private LocalDateTime productionDate;
+    private LocalDate productionDate;
     private String vin;
     private String color;
-    private Integer mileage;
+    private String mileage;
     private String registration;
+    private String power;
+    private String capacity;
     private int numberOfSeats;
     private int numberOfDoor;
-    private String state;
     private boolean neverCrashed;
-    private boolean registeredInPoland;
+    private String registeredFrom;
+    private LocalDate firstRegistration;
 
     public boolean getNeverCrashed() {
         return neverCrashed;
-    }
-
-    public boolean getRegisteredInPoland() {
-        return registeredInPoland;
     }
 }

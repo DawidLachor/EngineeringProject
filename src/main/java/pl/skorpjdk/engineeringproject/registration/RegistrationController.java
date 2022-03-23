@@ -14,8 +14,8 @@ public class RegistrationController {
 
     @PostMapping
     public ResponseEntity<?> register(@RequestBody RegistrationRequest request){
-        registrationService.register(request);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+            registrationService.register(request);
+            return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/confirm")

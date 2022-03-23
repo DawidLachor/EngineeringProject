@@ -16,7 +16,10 @@ public class MapperCar implements Mapper<Car, CarDto> {
         result.setRegistration(entity.getRegistration());
         result.setProductionDate(entity.getProductionDate());
         result.setNumberOfSeats(entity.getNumberOfSeats());
-        result.setRegisteredInPoland(entity.getRegisteredInPoland());
+        result.setFirstRegistration(entity.getFirstRegistration());
+        result.setRegisteredFrom(entity.getRegisteredFrom());
+        result.setCapacity(entity.getCapacity());
+        result.setPower(entity.getPower());
         return result;
     }
 
@@ -32,7 +35,10 @@ public class MapperCar implements Mapper<Car, CarDto> {
         result.setRegistration(entity.getRegistration());
         result.setProductionDate(entity.getProductionDate());
         result.setNumberOfSeats(entity.getNumberOfSeats());
-        result.setRegisteredInPoland(entity.getRegisteredInPoland());
+        result.setFirstRegistration(entity.getFirstRegistration());
+        result.setRegisteredFrom(entity.getRegisteredFrom());
+        result.setCapacity(entity.getCapacity());
+        result.setPower(entity.getPower());
         return result;
     }
 }

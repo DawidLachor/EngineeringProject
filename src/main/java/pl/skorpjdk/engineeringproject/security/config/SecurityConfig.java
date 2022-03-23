@@ -10,11 +10,14 @@ import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import pl.skorpjdk.engineeringproject.account.AccountDetailsServiceImpl;
+import pl.skorpjdk.engineeringproject.jwt.JwtTokenVerifier;
 
 import javax.crypto.SecretKey;
 import java.util.Arrays;
@@ -33,11 +36,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
-                .cors().configurationSource(corsConfigurationSource())
+                .cors()
+                    .configurationSource(corsConfigurationSource())
                 .and()
-                .csrf().disable()
+                .csrf()
+                    .disable()
+                .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .authorizeRequests()
-                .antMatchers("*").permitAll();
+                    .antMatchers("*").permitAll()
+                .antMatchers("/api/account", "/api/announcement", "/api/my-announcement/**", "announcement/edit/**").authenticated()
+                .and()
+                    .addFilterBefore(new JwtTokenVerifier(secretKey, userService), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
