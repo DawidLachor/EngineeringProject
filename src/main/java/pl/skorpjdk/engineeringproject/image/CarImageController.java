@@ -27,6 +27,7 @@ public class CarImageController {
     @RequestMapping(value = "/upload", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam(value = "announcementId", required = false) Long id) {
         String message = "";
+        System.out.println("upload");
         Optional<Announcement> announcement = announcementRepository.findById(id);
         CarImage carImage = new CarImage();
         try {
@@ -46,15 +47,55 @@ public class CarImageController {
         }
     }
 
+    @RequestMapping(value = "/edit", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> editFile(@RequestParam("file") MultipartFile file, @RequestParam(value = "announcementId", required = false) Long id) {
+        String message = "";
+        System.out.println("edit");
+        Optional<Announcement> announcement = announcementRepository.findById(id);
+        CarImage carImage = new CarImage();
+        try {
+            String imageName = storageService.save(file);
+            String url = MvcUriComponentsBuilder.fromMethodName(CarImageController.class, "getFile", imageName).build().toString();
+
+            announcement.ifPresentOrElse(carImage::setAnnouncement, () ->{throw new NullPointerException();});
+            carImage.setUrl(url);
+            carImage.setName(imageName);
+            carImageRepository.save(carImage);
+
+            message = "Uploaded the file successfully: " + file.getOriginalFilename();
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+        }
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> editFile(@PathVariable("id")  Long id) {
+        String message = "";
+        System.out.println("Delete");
+        Announcement announcement = announcementRepository.findById(id).get();
+        try {
+            List<CarImage> byAnnouncement = carImageRepository.findByAnnouncement(announcement).get();
+            carImageRepository.deleteAll(byAnnouncement);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+        }
+    }
+
     @GetMapping("/{id}/files")
     public ResponseEntity<List<CarImage>> getListFiles(@PathVariable Long id) {
+        System.out.println("getall");
         List<CarImage> all = storageService.findAll(id);
         return ResponseEntity.status(HttpStatus.OK).body(all);
     }
     @GetMapping("/files/{filename:.+}")
     @ResponseBody
     public ResponseEntity<Resource> getFile(@PathVariable String filename) {
+        System.out.println("get");
         Resource file = storageService.load(filename);
+
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }

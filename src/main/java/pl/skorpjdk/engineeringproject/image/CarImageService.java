@@ -39,6 +39,11 @@ public class CarImageService {
         }
     }
 
+    public void delete(Long id) {
+        CarImage carImage = carImageRepository.findById(id).get();
+        carImageRepository.delete(carImage);
+    }
+
 
     public Resource load(String filename) {
         try {

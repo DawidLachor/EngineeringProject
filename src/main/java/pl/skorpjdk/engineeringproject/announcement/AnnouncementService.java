@@ -1,7 +1,6 @@
 package pl.skorpjdk.engineeringproject.announcement;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import pl.skorpjdk.engineeringproject.account.Account;
 import pl.skorpjdk.engineeringproject.account.AccountService;
@@ -13,7 +12,6 @@ import pl.skorpjdk.engineeringproject.generation.Generation;
 import pl.skorpjdk.engineeringproject.generation.GenerationService;
 import pl.skorpjdk.engineeringproject.image.CarImage;
 import pl.skorpjdk.engineeringproject.image.CarImageRepository;
-import pl.skorpjdk.engineeringproject.image.CarImageService;
 import pl.skorpjdk.engineeringproject.mark.Mark;
 import pl.skorpjdk.engineeringproject.mark.MarkService;
 import pl.skorpjdk.engineeringproject.model.Model;
@@ -176,6 +174,21 @@ public class AnnouncementService {
         return announcement;
     }
 
+    private Announcement getAnnouncement(AnnouncementEdit announcementSave, Car car) {
+        Announcement announcement = new Announcement();
+        announcement.setActive(true);
+        announcement.setCreated(LocalDateTime.now());
+        announcement.setDelete(false);
+        announcement.setDescription(announcementSave.getDescribe());
+        announcement.setLocation(announcementSave.getLocation());
+        announcement.setPrice(announcementSave.getPrice());
+        announcement.setTitle(announcementSave.getTitle());
+        announcement.setCar(car);
+        announcement.setAccount(accountService.getCurrentAccount());
+        announcement.setPhone(announcement.getPhone());
+        return announcement;
+    }
+
     private Car getCar(AnnouncementSave announcementSave) {
         Car car = new Car();
         car.setColor(announcementSave.getColor());
@@ -183,7 +196,39 @@ public class AnnouncementService {
         car.setNeverCrashed(announcementSave.getCrash());
         car.setNumberOfDoor(announcementSave.getDoors());
         car.setNumberOfSeats(announcementSave.getSeats());
-        LocalDate production = LocalDate.parse(announcementSave.getYear_of_production() + "-01");
+        LocalDate production = LocalDate.parse(announcementSave.getYear_of_production());
+        car.setProductionDate(production);
+        LocalDate registration = LocalDate.parse(announcementSave.getFirst_registration());
+        car.setFirstRegistration(registration);
+        car.setRegistration(announcementSave.getRegistration_number());
+        car.setRegisteredFrom(announcementSave.getCountry_of_production());
+        car.setVin(announcementSave.getVin());
+        car.setPower(announcementSave.getPower());
+        car.setCapacity(announcementSave.getCapacity());
+        BodyType bodyType = bodyTypeService.getBodyType(announcementSave.getBodyType());
+        car.setBodyTypes(bodyType);
+        Mark mark = markService.getMark(announcementSave.getBrand());
+        car.setMark(mark);
+        Model model = modelService.getModel(announcementSave.getModel());
+        car.setModel(model);
+        Transmission transmission = transmissionService.getTransmission(announcementSave.getTransmission());
+        car.setTransmission(transmission);
+        TypeEngine typeEngine = typeEngineService.getTypeEngine(announcementSave.getGas());
+        car.setTypeEngine(typeEngine);
+        Generation generation = generationService.getGeneration(announcementSave.getGeneration());
+        car.setGeneration(generation);
+
+        return car;
+    }
+
+    private Car getCar(AnnouncementEdit announcementSave) {
+        Car car = new Car();
+        car.setColor(announcementSave.getColor());
+        car.setMileage(announcementSave.getMileage());
+        car.setNeverCrashed(announcementSave.getCrash());
+        car.setNumberOfDoor(announcementSave.getDoors());
+        car.setNumberOfSeats(announcementSave.getSeats());
+        LocalDate production = LocalDate.parse(announcementSave.getYear_of_production());
         car.setProductionDate(production);
         LocalDate registration = LocalDate.parse(announcementSave.getFirst_registration());
         car.setFirstRegistration(registration);
@@ -243,7 +288,7 @@ public class AnnouncementService {
         );
     }
 
-    public AnnouncementSave editMyAnnouncements(Long id) {
+    public AnnouncementEdit editGetMyAnnouncements(Long id) {
         Announcement announcement = announcementRepository.findById(id).get();
         Car car = announcement.getCar();
         BodyType bodyTypes = car.getBodyTypes();
@@ -253,7 +298,9 @@ public class AnnouncementService {
         TypeEngine typeEngine = car.getTypeEngine();
         Transmission transmission = car.getTransmission();
 
-        AnnouncementSave build = AnnouncementSave.builder()
+        AnnouncementEdit build = AnnouncementEdit.builder()
+                .id(announcement.getId())
+                .idCar(car.getId())
                 .bodyType(bodyTypes.getId())
                 .brand(mark.getId())
                 .model(model.getId())
@@ -279,6 +326,17 @@ public class AnnouncementService {
                 .year_of_production(car.getProductionDate().toString())
                 .build();
         return build;
+    }
+
+    public void editMyAnnouncements(AnnouncementEdit announcement) {
+        Car car = getCar(announcement);
+        Car carEntity = carService.getCar(announcement.getIdCar());
+        car.setId(carEntity.getId());
+        Car saveCar = carService.saveCar(car);
+        System.out.println("CAR: " + saveCar.getId());
+        Announcement announcementDTO = getAnnouncement(announcement, saveCar);
+        announcementDTO.setId(announcement.getId());
+        announcementRepository.save(announcementDTO);
     }
 }
 

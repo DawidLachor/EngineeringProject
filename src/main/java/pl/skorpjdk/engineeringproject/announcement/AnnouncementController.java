@@ -51,9 +51,15 @@ public class AnnouncementController {
     }
 
     @GetMapping("announcement/edit/{id}")
-    public ResponseEntity<?> editAnnouncements(@PathVariable Long id) {
-        AnnouncementSave announcementSave = announcementService.editMyAnnouncements(id);
+    public ResponseEntity<?> editGetAnnouncements(@PathVariable Long id) {
+        AnnouncementEdit announcementSave = announcementService.editGetMyAnnouncements(id);
         return new ResponseEntity<>(announcementSave, HttpStatus.OK);
+    }
+
+    @PutMapping("announcement/edit")
+    public ResponseEntity<?> editAnnouncements(@RequestBody AnnouncementEdit announcement) {
+        announcementService.editMyAnnouncements(announcement);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
